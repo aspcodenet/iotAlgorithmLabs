@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iterator>
 #include <sstream> 
+#include <set>
 
 using namespace std;
 
@@ -156,9 +157,15 @@ void Lab6()
 
 	sort(begin(words), end(words));
 
-	words.erase(unique(words.begin(), words.end()), words.end());
-	//Alt...  set<string> s( words.begin(), words.end() );
-	// words = s;
+	//words.erase(unique(words.begin(), words.end()), words.end());
+	//Alt...  
+
+	//set<string> s1;
+	//for(auto w : words)
+	//	s1.insert(w)
+	
+	//( words.begin(), words.end() );
+	//words = s;
 
 	for (string s : words)
 		cout << s << endl;
@@ -174,7 +181,9 @@ void Lab6()
 
 
 	int antal = count_if(begin(words), end(words), [](string word) {
-		return word.length() > 5;
+		if (word.length() > 5) return true;
+		return false;
+		//return word.length() > 5;
 		}
 	);
 	cout << (float)antal / (float)words.size();
@@ -191,8 +200,7 @@ void Lab6()
 		}),end(words));
 
 	auto iterator = remove_if(begin(words), end(words), [badWords](string word) {
-		bool ret = find(begin(badWords), end(badWords), word) != badWords.end();
-		return ret;
+		return find(begin(badWords), end(badWords), word) != badWords.end();
 		});
 	words.erase(iterator, end(words));
 
@@ -204,11 +212,11 @@ void Lab6()
 
 int main()
 {
+	Lab6();
 	Lab1();
 	Lab2();
 	Lab3();
 	Lab4();
 	Lab5();
-	Lab6();
 	return 0;
 }
