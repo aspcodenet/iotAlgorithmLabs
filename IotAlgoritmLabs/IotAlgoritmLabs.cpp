@@ -17,12 +17,15 @@ void Lab1()
 		v.push_back(ch);
 
 	sort(begin(v), end(v));
+
 	for_each(begin(v), end(v), [](char ch) {
 		cout << ch << ',';
 		});
 
 	cout << endl;
+
 	sort(begin(v), end(v), std::greater<char>());
+
 	for_each(begin(v), end(v), [](char ch) {
 		cout << ch << ',';
 		});
@@ -153,7 +156,6 @@ void Lab6()
 
 	sort(begin(words), end(words));
 
-	sort(begin(words), end(words));
 	words.erase(unique(words.begin(), words.end()), words.end());
 	//Alt...  set<string> s( words.begin(), words.end() );
 	// words = s;
@@ -178,13 +180,22 @@ void Lab6()
 	cout << (float)antal / (float)words.size();
 
 
+	vector<string> badWords = {
+		"and", "but", "do", "if", "in", "is", "its", "not", "of", "or" , "that", "the", "to"
+	};
+
 	cout << words.size() << endl;
-	remove_if(begin(words), end(words), [] (string word){
-		vector<string> badWords = {
-			"and", "but", "do", "if", "in", "is", "its", "not", "of", "or" , "that", "the", "to"
-		};
-		return find(begin(badWords), end(badWords), word) != badWords.end();
+	words.erase(remove_if(begin(words), end(words), [badWords] (string word){
+		bool ret = find(begin(badWords), end(badWords), word) != badWords.end();
+		return ret;
+		}),end(words));
+
+	auto iterator = remove_if(begin(words), end(words), [badWords](string word) {
+		bool ret = find(begin(badWords), end(badWords), word) != badWords.end();
+		return ret;
 		});
+	words.erase(iterator, end(words));
+
 
 	cout << words.size() << endl;
 
@@ -193,7 +204,6 @@ void Lab6()
 
 int main()
 {
-	Lab6();
 	Lab1();
 	Lab2();
 	Lab3();
